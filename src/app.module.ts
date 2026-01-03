@@ -12,6 +12,7 @@ import { RolesModule } from './roles/roles.module';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MongooseModule } from '@nestjs/mongoose';
+import { OrderModule } from './orders/orders.module';
 
 
 @Module({
@@ -32,7 +33,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     TokenModule,
     UserModule,
     RolesModule,
-    AdminModule
+    AdminModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService],
