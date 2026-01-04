@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import ApiError from 'src/exceptions/errors/api-error';
 import { InjectModel } from '@nestjs/mongoose';
 import { IProduct } from './interfaces/product.interface';
+import { IProductToEdit } from './interfaces/IProductToEdit';
 
 @Injectable()
 export class ProductService {
@@ -12,22 +13,12 @@ export class ProductService {
   ) {}
 
   async create(product: IProduct) {
-    const candidate = await this.ProductModel.findOne({ name: product.name });
-
-    if (candidate)
-      throw ApiError.BadRequest(
-        `Товар с таким именем ${product.name} уже существует`,
-      );
-
     const created_product: ProductDocument =
       await this.ProductModel.create(product);
-
-    return {
-      product: created_product,
-    };
+    return created_product;
   }
 
-  async editById(properties: any, productId: string) {
+  async editById(properties: IProductToEdit, productId: string) {
     const candidate = await this.ProductModel.findOne({ id: productId });
 
     if (candidate)
@@ -40,27 +31,7 @@ export class ProductService {
       { $set: properties },
     );
 
-    return {
-      product: edited_product,
-    };
-  }
-
-  async editByName(properties: any, productName: string) {
-    const candidate = await this.ProductModel.findOne({ id: productName });
-
-    if (candidate)
-      throw ApiError.BadRequest(
-        `Товар с таким именем ${productName} уже существует`,
-      );
-
-    const edited_product = await this.ProductModel.findOneAndUpdate(
-      { name: productName },
-      { $set: properties },
-    );
-
-    return {
-      product: edited_product,
-    };
+    return edited_product;
   }
 
   async update(newProduct: IProduct, productId: string) {
@@ -70,22 +41,6 @@ export class ProductService {
     });
   }
 
-  async deleteByName(productName: string) {
-    const candidate = await this.ProductModel.findOne({ name: productName });
-
-    if (!candidate) {
-      throw ApiError.BadRequest(`Товар с именем "${productName}" не найден`);
-    }
-
-    // Удаляем товар
-    const deletedProduct = await this.ProductModel.findOneAndDelete({
-      name: productName,
-    });
-
-    return {
-      product: deletedProduct,
-    };
-  }
   async deleteById(productId: string) {
     const candidate = await this.ProductModel.findOne({ name: productId });
 
@@ -94,8 +49,6 @@ export class ProductService {
     }
     const deletedProduct = await this.ProductModel.findByIdAndDelete(productId);
 
-    return {
-      product: deletedProduct,
-    };
+    return deletedProduct;
   }
 }
