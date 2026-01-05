@@ -20,7 +20,7 @@ export class OrderController {
         @Body('products') products: mongoose.Types.ObjectId[],
         @Body('customer') customer: mongoose.Types.ObjectId) {
         try {
-            return this.orderService.create({ products, customer })
+            return await this.orderService.create({ products, customer })
         } catch (error) {
             ApiError.BadRequest("Тело запроса содержит ошибки")
         }
@@ -31,7 +31,7 @@ export class OrderController {
     async delete(
         @Body('_id') _id: mongoose.Types.ObjectId) {
         try {
-            return this.orderService.delete(_id)
+            return await this.orderService.delete(_id)
         } catch (error) {
             ApiError.BadRequest("Тело запроса содержит ошибки")
         }
@@ -45,7 +45,7 @@ export class OrderController {
         @Body('_id') _id: mongoose.Types.ObjectId) {
 
         try {
-            return this.orderService.edit({ products, customer }, _id)
+            return await this.orderService.edit({ products, customer }, _id)
         } catch (error) {
             ApiError.BadRequest("Тело запроса содержит ошибки")
         }
