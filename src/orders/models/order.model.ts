@@ -1,5 +1,5 @@
 import { MongooseModule } from "@nestjs/mongoose";
-import { OrderSchema } from "../schemas/orders.schema";
+import { OrderSchema } from "../schemas/order.schema";
 
 let OrderModel = MongooseModule.forFeature([{
     name: 'Order',

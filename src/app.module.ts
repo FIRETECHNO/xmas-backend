@@ -12,7 +12,7 @@ import { RolesModule } from './roles/roles.module';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MongooseModule } from '@nestjs/mongoose';
-import { OrderModule } from './orders/orders.module';
+import { OrderModule } from './orders/order.module';
 
 
 @Module({
