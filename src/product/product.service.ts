@@ -19,18 +19,13 @@ export class ProductService {
   }
 
   async editById(properties: IProductToEdit, productId: string) {
-    const candidate = await this.ProductModel.findOne({ id: productId });
-
-    if (candidate)
-      throw ApiError.BadRequest(
-        `Товар с таким именем ${productId} уже существует`,
-      );
-
     const edited_product = await this.ProductModel.findByIdAndUpdate(
       productId,
       { $set: properties },
     );
 
+    if (!edited_product)
+      throw ApiError.NotFound(`Товара с таким id ${productId} не существует`);
     return edited_product;
   }
 
@@ -42,13 +37,17 @@ export class ProductService {
   }
 
   async deleteById(productId: string) {
-    const candidate = await this.ProductModel.findOne({ name: productId });
-
-    if (!candidate) {
-      throw ApiError.BadRequest(`Товар с таким id "${productId}" не найден`);
-    }
     const deletedProduct = await this.ProductModel.findByIdAndDelete(productId);
 
+    if (!deletedProduct) {
+      throw ApiError.NotFound(`Товар с ID "${productId}" не найден`);
+    }
+
     return deletedProduct;
+  }
+
+  async getAllProducts(sort: any = {}) {
+    const products = await this.ProductModel.find({}).sort(sort).exec();
+    return products;
   }
 }

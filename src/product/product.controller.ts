@@ -58,4 +58,14 @@ export class ProductController {
       product: editedProduct,
     };
   }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('get-all')
+  async get_all() {
+    let products = await this.ProductService.getAllProducts();
+    return {
+      success: true,
+      products: products,
+    };
+  }
 }
