@@ -12,15 +12,17 @@ import { RolesModule } from './roles/roles.module';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MongooseModule } from '@nestjs/mongoose';
-
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot([{
-      ttl: 1000,
-      limit: 20,
-      blockDuration: 10 * 60000,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 1000,
+        limit: 20,
+        blockDuration: 10 * 60000,
+      },
+    ]),
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGO_URL, {
       connectionFactory: (connection) => {
@@ -32,9 +34,10 @@ import { MongooseModule } from '@nestjs/mongoose';
     TokenModule,
     UserModule,
     RolesModule,
-    AdminModule
+    AdminModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
