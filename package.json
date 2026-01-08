@@ -17,7 +17,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate:create": "migrate-mongo create",
+    "migrate:up": "migrate-mongo up",
+    "migrate:down": "migrate-mongo down",
+    "migrate:status": "migrate-mongo status"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
@@ -33,6 +37,8 @@
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
+    "migrate-mongo": "^14.0.7",
+    "mongodb": "^7.0.0",
     "mongoose": "^9.1.1",
     "mongoose-autopopulate": "^1.2.1",
     "multer": "^2.0.2",
