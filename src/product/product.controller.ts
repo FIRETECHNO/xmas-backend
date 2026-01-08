@@ -14,7 +14,6 @@ export class ProductController {
     let productData: ProductDocument =
       await this.ProductService.create(product);
     return {
-      success: true,
       data: productData,
     };
   }
@@ -23,11 +22,10 @@ export class ProductController {
   @Post('delete')
   async delete(@Body('_id') _id?: string) {
     if (_id) {
-      const deletedProduct: ProductDocument | null =
+      const deletedProduct: ProductDocument =
         await this.ProductService.deleteById(_id);
 
       return {
-        success: true,
         product: deletedProduct,
       };
     } else {
@@ -45,7 +43,7 @@ export class ProductController {
       throw ApiError.BadRequest('Не переданы данные для обновления');
     }
 
-    let editedProduct: ProductDocument | null;
+    let editedProduct: ProductDocument;
 
     if (_id) {
       editedProduct = await this.ProductService.editById(updates, _id);
@@ -54,7 +52,6 @@ export class ProductController {
     }
 
     return {
-      success: true,
       product: editedProduct,
     };
   }
@@ -64,7 +61,6 @@ export class ProductController {
   async get_all() {
     let products = await this.ProductService.getAllProducts();
     return {
-      success: true,
       products: products,
     };
   }
